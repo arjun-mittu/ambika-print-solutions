@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static%}
+{% load crispy_forms_tags %}
 {% block content %}
     <div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
       <div class="container">
@@ -13,29 +14,62 @@
     </div>
 
     <section class="ftco-section">
+	<form action="POST" class="billing-form">
+		 			{% csrf_token %}
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-xl-10 ftco-animate">
-						<form action="#" class="billing-form">
-							<h3 class="mb-4 billing-heading">Billing Details</h3>
-	          	<div class="row align-items-end">
-	          		<div class="col-md-6">
-	                <div class="form-group">
-	                	<label for="firstname">Firt Name</label>
-	                  <input type="text" class="form-control" placeholder="">
-	                </div>
-	              </div>
-	              <div class="col-md-6">
-	                <div class="form-group">
-	                	<label for="lastname">Last Name</label>
-	                  <input type="text" class="form-control" placeholder="">
-	                </div>
-                </div>
+		 {% comment  %}
+		  <form>
+		  	{% csrf_token %}
+			  {{form|crispy}}
+			  <button type="submit">Checkout</button>
+		  </form>{% endcomment %}
+		 {%comment%}<form action="POST" class="billing-form">
+		 			{% csrf_token %}{%endcomment%}
+							<h3 class="mb-4 billing-heading">Shippping Address</h3>
+	          	
                 <div class="w-100"></div>
-		            <div class="col-md-12">
+		            
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
 		            	<div class="form-group">
-		            		<label for="country">State / Country</label>
-		            		<div class="select-wrap">
+	                	<label for="streetaddress">Street Address*</label>
+	                  {% comment  %}
+					  <input type="text" class="form-control" placeholder="House number and street name">{% endcomment %}
+	                	{{ form.street_address}}
+					</div>
+		            </div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+	                 {% comment  %}
+					 <input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)">
+					 {% endcomment %} 
+					 {{ form.apartment_address }}
+	                </div>
+		            </div>
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+	                	<label for="towncity">Town / City*</label>
+	                 {% comment  %}
+					  <input type="text" class="form-control" placeholder="">{% endcomment %}
+					  {{form.city}}
+	                </div>
+		            </div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+		            		<label for="postcodezip">Postcode / ZIP *</label>
+	                  {% comment  %}
+					  <input type="text" class="form-control" placeholder="">{% endcomment %}
+					  {{form.zip}}
+	                </div>
+		            </div>
+					<div class="col-md-12">
+		            	<div class="form-group">
+		            		<label for="country">Country*</label>
+		            		{% comment %}
+							<div class="select-wrap">
 		                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
 		                  <select name="" id="" class="form-control">
 		                  	<option value="">France</option>
@@ -46,8 +80,50 @@
 		                    <option value="">Japan</option>
 		                  </select>
 		                </div>
-		            	</div>
+		            	</div>{% endcomment %}
+						{{form.country}}
 		            </div>
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="phone">Phone</label>
+	                  {% comment  %}
+					  <input type="text" class="form-control" placeholder="">{% endcomment %}
+					  {{form.phoneno}}
+	                </div>
+	              </div>
+	              <div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="emailaddress">Email Address</label>
+	                  {% comment  %}
+					  <input type="text" class="form-control" placeholder="">
+					  {% endcomment %}
+					  {{form.email}}
+	                </div>
+                </div>
+                <div class="w-100"></div>
+                <div class="col-md-12">
+                	<div class="form-group mt-4">
+										<div class="radio">
+										  <input {% if form.same_shipping_address.value %}checked{% endif %}type="checkbox" name="same_billing_address"><label class="mr-3" for="same_billing_address"> Shipping address is the same as my billing address </label><br>
+										  <input {% if form.save_info.value %}checked{% endif %}type="checkbox" name="set_default_shipping"><lable  for="set_default_shipping"> Save as default shipping address</label><br>
+										  {% comment  %}
+										  <input type="checkbox" name="use_default_shipping"><label  for="use_default_shipping"> Use default shipping address</label>{% endcomment %}
+										</div>
+									</div>
+                </div>
+	            </div>
+	          {% comment  %}
+			  </form>
+			  {% endcomment %}<!-- END --></div></div></div>
+			  <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-10 ftco-animate">
+			 <!-- <form action="#" class="billing-form">
+							<h3 class="mb-4 billing-heading">Billing Details</h3>
+	          	
+                <div class="w-100"></div>
+		            
 		            <div class="w-100"></div>
 		            <div class="col-md-6">
 		            	<div class="form-group">
@@ -73,6 +149,22 @@
 	                  <input type="text" class="form-control" placeholder="">
 	                </div>
 		            </div>
+					<div class="col-md-12">
+		            	<div class="form-group">
+		            		<label for="country">Country</label>
+		            		<div class="select-wrap">
+		                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+		                  <select name="" id="" class="form-control">
+		                  	<option value="">France</option>
+		                    <option value="">Italy</option>
+		                    <option value="">Philippines</option>
+		                    <option value="">South Korea</option>
+		                    <option value="">Hongkong</option>
+		                    <option value="">Japan</option>
+		                  </select>
+		                </div>
+		            	</div>
+		            </div>
 		            <div class="w-100"></div>
 		            <div class="col-md-6">
 	                <div class="form-group">
@@ -90,13 +182,15 @@
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
 										<div class="radio">
-										  <label class="mr-3"><input type="radio" name="optradio"> Create an Account? </label>
-										  <label><input type="radio" name="optradio"> Ship to different address</label>
+										  <label class="mr-3"><input type="checkbox" name="set_default_billing" id="set_default_billing"> Save as default billing address</label><br>
+										  <label><input type="checkbox" name="use_default_billing" id="use_default_billing"> Use default billing address</label>
 										</div>
 									</div>
                 </div>
 	            </div>
-	          </form><!-- END -->
+	          </form>--><!-- END -->
+				</div>
+						
 
 
 
@@ -126,40 +220,24 @@
 	          	<div class="col-md-6">
 	          		<div class="cart-detail bg-light p-3 p-md-4">
 	          			<h3 class="billing-heading mb-4">Payment Method</h3>
+						  			{% for value, name in form.fields.payment_option.choices %}
 									<div class="form-group">
 										<div class="col-md-12">
 											<div class="radio">
-											   <label><input type="radio" name="optradio" class="mr-2"> Direct Bank Tranfer</label>
+											   <label for="{{name}}"><input id={{name}} type="radio" name="payment_option" class="mr-2" value="{{value}}"> {{name}}</label>
 											</div>
 										</div>
 									</div>
-									<div class="form-group">
-										<div class="col-md-12">
-											<div class="radio">
-											   <label><input type="radio" name="optradio" class="mr-2"> Check Payment</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-md-12">
-											<div class="radio">
-											   <label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-md-12">
-											<div class="checkbox">
-											   <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
-											</div>
-										</div>
-									</div>
-									<p><a href="#"class="btn btn-primary py-3 px-4">Place an order</a></p>
+									{% endfor %}
+									
+									
+									<p><button class="btn btn-primary py-3 px-4" type="submit">Place an order</button</p>
 								</div>
 	          	</div>
 	          </div>
           </div> <!-- .col-md-8 -->
         </div>
       </div>
+	  </form>
     </section> <!-- .section -->
 {% endblock content %}
