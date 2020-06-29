@@ -4,8 +4,8 @@ from django_countries.widgets import CountrySelectWidget
 
 
 PAYMENT_CHOICES = (
-    ('S', 'Stripe'),
-    ('P', 'PayPal')
+    ('Paytm', 'Paytm'),
+    
 )
 class CheckoutForm(forms.Form):
     street_address = forms.CharField(widget=forms.TextInput(attrs={

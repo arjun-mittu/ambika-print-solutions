@@ -7,8 +7,18 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
-from .models import Item,Order,OrderItem,BillingAddress
+from .models import Item,Order,OrderItem,BillingAddress,Payment
 from .forms import CheckoutForm
+import stripe
+class PaymentView(View):
+    def get(self, *args, **kwargs):
+        order = Order.objects.get(user=self.request.user, ordered=False)
+        context = {
+            'order': order
+        }
+        return render(self.request, "payment.html", context)
+        
+
 class HomeView(ListView):
     model=Item
     template_name="home.html"
@@ -30,8 +40,10 @@ class ItemDetailView(DetailView):
 class CheckoutView(View):
     def get(self, *args, **kwargs):
         form = CheckoutForm()
+        order = Order.objects.get(user=self.request.user, ordered=False)
         context = {
-            'form': form
+            'form': form,
+            'order': order
         }
         return render(self.request, "checkout.html", context)
 
@@ -44,6 +56,9 @@ class CheckoutView(View):
                 apartment_address = form.cleaned_data.get('apartment_address')
                 country = form.cleaned_data.get('country')
                 zip = form.cleaned_data.get('zip')
+                city=form.cleaned_data.get('city')
+                phoneno=form.cleaned_data.get('phoneno')
+                email=form.cleaned_data.get('email')
                 # TODO: add functionality for these fields
                 # same_shipping_address = form.cleaned_data.get(
                 #     'same_shipping_address')
@@ -53,6 +68,7 @@ class CheckoutView(View):
                     user=self.request.user,
                     street_address=street_address,
                     apartment_address=apartment_address,
+                    city=city,
                     country=country,
                     zip=zip,
                     phoneno=phoneno,
@@ -62,9 +78,12 @@ class CheckoutView(View):
                 order.billing_address = billing_address
                 order.save()
                 # TODO: add redirect to the selected payment option
-                return redirect('core:checkout')
-            messages.warning(self.request, "Failed checkout")
-            return redirect('core:checkout')
+                if payment_option == 'Paytm':
+                    return redirect('core:payment', payment_option='Paytm')
+                else:
+                    messages.warning(
+                        self.request, "Invalid payment option selected")
+                    return redirect('core:checkout')
         except ObjectDoesNotExist:
             messages.error(self.request, "You do not have an active order")
             return redirect("core:order-summary")
