@@ -5,28 +5,28 @@ from django.db.models import Sum
 from django.shortcuts import reverse
 from django_countries.fields import CountryField
 CATEGORY_CHOICES = (
-    ('TS', 'TShirt'),
-    ('SW', 'Sport wear'),
-    ('CW', 'Casual wear'),
-    ('DM','designer masks'),
-    ('PPE','PPE kits')
+    ('TShirt', 'TShirt'),
+    ('Sport Wear', 'Sport wear'),
+    ('Casual Wear', 'Casual wear'),
+    ('Designer Masks','designer masks'),
+    ('PPE kits','PPE kits')
 )
 TYPE_CHOICE=(
-    ('TS','Track suits'),
-    ('L','Lowers'),
-    ('S','Shorts'),
-    ('CTS','Cotton t-shirt'),
-    ('STS','Sublimation t-shirt'),
-    ('ML','Mask for ladies'),
-    ('MM','Mask for men'),
-    ('MU','Medical Use')
+    ('Track Suit','Track suits'),
+    ('Lowers','Lowers'),
+    ('Shorts','Shorts'),
+    ('Cotton T-Shirt','Cotton t-shirt'),
+    ('Sublimation T-Shirt','Sublimation t-shirt'),
+    ('Mask for Ladies','Mask for ladies'),
+    ('Mask for Men','Mask for men'),
+    ('Medical Use','Medical Use')
 )
 class Item(models.Model):
     title=models.CharField(max_length=100)
     price=models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=3)
-    typechoice = models.CharField(choices=TYPE_CHOICE, max_length=3)
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=50)
+    typechoice = models.CharField(choices=TYPE_CHOICE, max_length=50)
     slug = models.SlugField()
     description = models.TextField()
     image = models.ImageField()
@@ -105,3 +105,11 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class contactme(models.Model):
+    name=models.CharField(max_length=255)
+    email=models.EmailField(null=True)
+    subject=models.CharField(max_length=255)
+    message=models.CharField(max_length=255)
+    def __str__(self):
+        return self.name

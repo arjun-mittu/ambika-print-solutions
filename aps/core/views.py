@@ -7,9 +7,12 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
-from .models import Item,Order,OrderItem,BillingAddress,Payment
-from .forms import CheckoutForm
-import stripe
+from .models import Item,Order,OrderItem,BillingAddress,Payment,contactme
+from .forms import CheckoutForm,contactmefrm
+from django.views.decorators.csrf import csrf_exempt
+
+
+
 class PaymentView(View):
     def get(self, *args, **kwargs):
         order = Order.objects.get(user=self.request.user, ordered=False)
@@ -22,6 +25,35 @@ class PaymentView(View):
 class HomeView(ListView):
     model=Item
     template_name="home.html"
+
+class contactme(ListView):
+    def get(self, *args, **kwargs):
+        form = contactmefrm
+        context = {
+            'form': form,
+        }
+        return render(self.request, "contact.html", context)
+    def post(self,*args, **kwargs):
+        form = contactmefrm(self.request.POST or None)
+        try:
+            if form.is_valid():
+                name= form.cleaned_data.get('name')
+                email= form.cleaned_data.get('email')
+                subject= form.cleaned_data.get('subject')
+                message= form.cleaned_data.get('message')
+                contact_me = contactme(
+                    name=name,
+                    email=email,
+                    subject=subject,
+                    message=message,
+                )
+                print(contact_me)
+                print('hello')
+                #contact_me.save()
+                return redirect('core:contact')
+        except ObjectDoesNotExist:
+            messages.error(self.request, "fill the form correctly")
+            return redirect("core:contact")
 
 class OrderSummaryView(LoginRequiredMixin,View):
     def get(self, *args, **kwargs):

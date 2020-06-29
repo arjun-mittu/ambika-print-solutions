@@ -41,3 +41,22 @@ class CheckoutForm(forms.Form):
     save_info = forms.BooleanField(required=False)
     payment_option = forms.ChoiceField(
         widget=forms.RadioSelect, choices=PAYMENT_CHOICES)
+
+class contactmefrm(forms.Form):
+    name= forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder':'your name',
+         'class':'form-control',
+    }))
+    email=forms.EmailField(required=True,widget=forms.TextInput(attrs={
+        'placeholder':'Your Email',
+        'class':'form-control',
+    }))
+    subject=forms.CharField(widget=forms.TextInput(attrs={
+         'placeholder':'subject',
+         'class':'form-control',
+    }))
+    message=forms.CharField(widget=forms.TextInput(attrs={
+         'placeholder':'message',
+         'class':'form-control',
+         
+    }))
