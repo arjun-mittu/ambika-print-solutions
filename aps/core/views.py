@@ -53,7 +53,6 @@ class CheckoutView(View):
                     user=self.request.user,
                     street_address=street_address,
                     apartment_address=apartment_address,
-                    city=city,
                     country=country,
                     zip=zip,
                     phoneno=phoneno,
