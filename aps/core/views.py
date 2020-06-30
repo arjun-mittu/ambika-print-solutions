@@ -7,8 +7,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
-from .models import Item,Order,OrderItem,BillingAddress,Payment,contactme
-from .forms import CheckoutForm,contactmefrm
+from .models import Item,Order,OrderItem,BillingAddress,Payment,Contactme
+from .forms import CheckoutForm,contactmefrm,get_size
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -41,7 +41,7 @@ class contactme(ListView):
                 email= form.cleaned_data.get('email')
                 subject= form.cleaned_data.get('subject')
                 message= form.cleaned_data.get('message')
-                contact_me = contactme(
+                contact_me = Contactme.objects.create(
                     name=name,
                     email=email,
                     subject=subject,
@@ -67,6 +67,7 @@ class OrderSummaryView(LoginRequiredMixin,View):
             messages.error(self.request, "You do not have an active order")
             return redirect("/")
 class ItemDetailView(DetailView):
+    form=get_size
     model=Item
     template_name='product.html'
 class CheckoutView(View):

@@ -21,6 +21,17 @@ TYPE_CHOICE=(
     ('Mask for Men','Mask for men'),
     ('Medical Use','Medical Use')
 )
+size_choice=(
+    ('XXXL','XXXL'),
+    ('XXL','XXL'),
+    ('XL','XL'),
+    ('L','L'),
+    ('M','M'),
+    ('S','S'),
+    ('XS','XS'),
+    ('XXS','XXS')
+)
+
 class Item(models.Model):
     title=models.CharField(max_length=100)
     price=models.FloatField()
@@ -51,7 +62,7 @@ class OrderItem(models.Model):
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-
+    size=models.CharField(choices=size_choice,max_length=255)
     def __str__(self):
         return f"{self.quantity} of {self.item.title}"
     def get_total_item_price(self):
@@ -106,7 +117,7 @@ class Payment(models.Model):
     def __str__(self):
         return self.user.username
 
-class contactme(models.Model):
+class Contactme(models.Model):
     name=models.CharField(max_length=255)
     email=models.EmailField(null=True)
     subject=models.CharField(max_length=255)

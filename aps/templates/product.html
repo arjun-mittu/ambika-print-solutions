@@ -26,6 +26,16 @@
     <link rel="stylesheet" href="{%static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{%static 'css/icomoon.css' %}">
     <link rel="stylesheet" href="{%static 'css/style.css' %}">
+    <link rel="stylesheet" href="{%static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{%static 'css/icomoon.css' %}">
+    <link rel="stylesheet" href="{%static 'css/style.css' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}  ">
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}  ">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}  ">
+<link rel="manifest" href="{%static 'favicon/site.webmanifest'">
+<link rel="mask-icon" href=" {% static 'favicon/safari-pinned-tab.svg' %} " color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
   </head>
   <body class="goto-here">
 		
@@ -82,7 +92,11 @@
           <div class="flex ml-6 items-center">
             <span class="mr-3">Size</span>
             <div class="relative">
-              <select class="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-orange-500 text-base pl-3 pr-10">
+            <form action="POST">
+            {% csrf_token %}
+            <select class="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-orange-500 text-base pl-3 pr-10">
+            
+              
                 <option>XXS</option>
                 <option>XS</option>
                 <option>S</option>
@@ -90,7 +104,8 @@
                 <option>L</option>
                 <option>XL</option>
                 <option>XXL</option>
-              </select>
+              </select> 
+              </form>
               <span class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4" viewBox="0 0 24 24">
                   <path d="M6 9l6 6 6-6"></path>
@@ -127,7 +142,7 @@
             <div class="ftco-footer-widget mb-4 ml-md-5">
               <h2 class="ftco-heading-2">Menu</h2>
               <ul class="list-unstyled">
-              <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+              <li><a href="{% url 'core:contact' %}" class="py-2 d-block">Contact Us</a></li>
                 
               </ul>
             </div>

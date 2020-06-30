@@ -7,6 +7,16 @@ PAYMENT_CHOICES = (
     ('Paytm', 'Paytm'),
     
 )
+size_choice=(
+    ('XXXL','XXXL'),
+    ('XXL','XXL'),
+    ('XL','XL'),
+    ('L','L'),
+    ('M','M'),
+    ('S','S'),
+    ('XS','XS'),
+    ('XXS','XXS')
+)
 class CheckoutForm(forms.Form):
     street_address = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': '1234 Main St',
@@ -60,3 +70,5 @@ class contactmefrm(forms.Form):
          'class':'form-control',
          
     }))
+class get_size(forms.Form):
+    size= forms.CharField(widget=forms.Select(choices=size_choice))
