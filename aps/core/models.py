@@ -55,6 +55,10 @@ class Item(models.Model):
         return reverse("core:remove-from-cart", kwargs={
             'slug': self.slug
         })
+    def add_size(self):
+        return reverse("core:addsize", kwargs={
+            'slug': self.slug
+        })
 
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,

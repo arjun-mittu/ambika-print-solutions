@@ -70,5 +70,4 @@ class contactmefrm(forms.Form):
          'class':'form-control',
          
     }))
-class get_size(forms.Form):
-    size= forms.CharField(widget=forms.Select(choices=size_choice))
+
