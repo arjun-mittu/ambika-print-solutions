@@ -84,6 +84,8 @@ class CheckoutView(View):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
             if form.is_valid():
+                first_name= form.cleaned_data.get('firstname')
+                last_name= form.cleaned_data.get('lastname')
                 street_address = form.cleaned_data.get('street_address')
                 apartment_address = form.cleaned_data.get('apartment_address')
                 country = form.cleaned_data.get('country')
@@ -91,6 +93,7 @@ class CheckoutView(View):
                 city=form.cleaned_data.get('city')
                 phoneno=form.cleaned_data.get('phoneno')
                 email=form.cleaned_data.get('email')
+                size=form.cleaned_data.get('size')
                 # TODO: add functionality for these fields
                 # same_shipping_address = form.cleaned_data.get(
                 #     'same_shipping_address')
@@ -98,13 +101,16 @@ class CheckoutView(View):
                 payment_option = form.cleaned_data.get('payment_option')
                 billing_address = BillingAddress(
                     user=self.request.user,
+                    first_name=first_name,
+                    last_name=last_name,
                     street_address=street_address,
                     apartment_address=apartment_address,
                     city=city,
                     country=country,
                     zip=zip,
                     phoneno=phoneno,
-                    email=email
+                    email=email,
+                    size=size
                 )
                 billing_address.save()
                 order.billing_address = billing_address

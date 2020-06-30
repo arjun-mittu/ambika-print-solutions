@@ -18,6 +18,21 @@ size_choice=(
     ('XXS','XXS')
 )
 class CheckoutForm(forms.Form):
+    firstname = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Enter first Name',
+        'id': 'address',
+        'class':'form-control',
+    }))
+    lastname = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'enter last name',
+        'id': 'address',
+        'class':'form-control',
+    }))
+    size = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'size',
+        'id': 'address',
+        'class':'form-control',
+    }))
     street_address = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': '1234 Main St',
         'id': 'address',

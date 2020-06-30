@@ -19,6 +19,7 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-xl-10 ftco-animate">
+		  <div class="row align-items-end">
 		 {% comment  %}
 		  <form>
 		  	{% csrf_token %}
@@ -28,8 +29,25 @@
 		 {%comment%}<form action="POST" class="billing-form">
 		 			{% csrf_token %}{%endcomment%}
 							<h3 class="mb-4 billing-heading">Shippping Address</h3>
-	          	
+							<div class="row align-items-end">
+	          	<div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="firstname">Firt Name*</label>
+	                  {% comment  %}<input type="text" class="form-control" placeholder="">
+					  {% endcomment %}{{form.firstname}}
+	                </div>
+	              </div>
+	              <div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="lastname">Last Name*</label>
+	                  {% comment  %}
+					  <input type="text" class="form-control" placeholder="">{% endcomment %}
+					  {{form.lastname}}
+	                </div>
+                </div>
+				
                 <div class="w-100"></div>
+				
 		            
 		            <div class="w-100"></div>
 		            <div class="col-md-6">
@@ -68,21 +86,9 @@
 					<div class="col-md-12">
 		            	<div class="form-group">
 		            		<label for="country">Country*</label>
-		            		{% comment %}
-							<div class="select-wrap">
-		                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-		                  <select name="" id="" class="form-control">
-		                  	<option value="">France</option>
-		                    <option value="">Italy</option>
-		                    <option value="">Philippines</option>
-		                    <option value="">South Korea</option>
-		                    <option value="">Hongkong</option>
-		                    <option value="">Japan</option>
-		                  </select>
-		                </div>
-		            	</div>{% endcomment %}
 						{{form.country}}
 		            </div>
+					</div>
 		            <div class="w-100"></div>
 		            <div class="col-md-6">
 	                <div class="form-group">
@@ -100,17 +106,18 @@
 					  {% endcomment %}
 					  {{form.email}}
 	                </div>
-                </div>
+                </div></div>
                 <div class="w-100"></div>
+				{% comment  %}
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
 										<div class="radio">
 										  <input {% if form.same_shipping_address.value %}checked{% endif %}type="checkbox" name="same_billing_address"><label class="mr-3" for="same_billing_address"> Shipping address is the same as my billing address </label><br>
 										  <input {% if form.save_info.value %}checked{% endif %}type="checkbox" name="set_default_shipping"><lable  for="set_default_shipping"> Save as default shipping address</label><br>
-										  {% comment  %}
-										  <input type="checkbox" name="use_default_shipping"><label  for="use_default_shipping"> Use default shipping address</label>{% endcomment %}
+										  
+										  <input type="checkbox" name="use_default_shipping"><label  for="use_default_shipping"> Use default shipping address</label>
 										</div>
-									</div>
+									</div>{% endcomment %}
                 </div>
 	            </div>
 	          {% comment  %}
@@ -191,7 +198,15 @@
 	          </form>--><!-- END -->
 				</div>
 						
-
+			<div class="w-100"></div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+	                	<label for="towncity">Size*(enter single for same size of order placed , enter each size and its quantity of that order)</label>
+	                 {% comment  %}
+					  <input type="text" class="form-control" placeholder="">{% endcomment %}
+					  {{form.size}}
+	                </div>
+		            </div></div>
 
 
 	          <div class="row mt-5 pt-3 d-flex">
@@ -232,7 +247,7 @@
 	          </div>
           </div> <!-- .col-md-8 -->
         </div>
-      </div>
+      </div></div>
 	  </form>
     </section> <!-- .section -->
 {% endblock content %}

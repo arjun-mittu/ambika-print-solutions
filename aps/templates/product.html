@@ -94,16 +94,16 @@
             <div class="relative">
             <form action="POST">
             {% csrf_token %}
-            <select class="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-orange-500 text-base pl-3 pr-10">
+            <select id="sizeview" class="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-orange-500 text-base pl-3 pr-10">
             
               
-                <option>XXS</option>
-                <option>XS</option>
-                <option>S</option>
-                <option>M</option>
-                <option>L</option>
-                <option>XL</option>
-                <option>XXL</option>
+                <option value="XXS">XXS</option>
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
               </select> 
               </form>
               <span class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
@@ -117,7 +117,11 @@
         <div class="flex">
           <span class="title-font font-medium text-2xl text-gray-900">&#8377;{{object.price}}</span>
           <!--<button class="flex ml-auto text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded">Add to cart</button>-->
+          {% comment  %}
           <a href="{{object.get_add_to_cart_url}}" class="flex ml-auto text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded">Add to cart</a>
+          {% endcomment %}
+                    <a id="addtocart" class="flex ml-auto text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded">Add to cart</a>
+
         </div>
       </div>
     </div>
@@ -175,7 +179,12 @@
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
+<script>
+  let addtocart=document.getElementById('addtocart')
+  let sizeview=document.getElementById('sizeview')
+  let size=sizeview.options[sizeview.selectedIndex].value;
+  addtocart.href="{{object.get_add_to_cart_url}}"
+</script>
 
   <script src="{% static 'js/jquery.min.js' %}"></script>
   <script src="{%static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
