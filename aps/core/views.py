@@ -120,7 +120,7 @@ class CheckoutView(View):
                     return redirect('core:payment', payment_option='Paytm')
                 else:
                     messages.warning(
-                        self.request, "Invalid payment option selected")
+                        self.request, "Invalid payment option    selected")
                     return redirect('core:checkout')
         except ObjectDoesNotExist:
             messages.error(self.request, "You do not have an active order")
